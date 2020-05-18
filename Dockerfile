@@ -8,6 +8,11 @@ WORKDIR /usr/src/app
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-COPY . .
+RUN curl -sSL https://get.docker.com/ | sh
 
-ENTRYPOINT bundle
+
+ADD ./wrapdocker /usr/local/bin/wrapdocker
+RUN chmod +x /usr/local/bin/wrapdocker
+
+VOLUME /var/lib/docker
+CMD ["wrapdocker"]
